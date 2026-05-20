@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Quiz Ngôn ngữ Hình khối & Cảm xúc</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Inter,sans-serif;
+    background:#0F0A3B;
+    color:white;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+.container{
+    width:100%;
+    max-width:1440px;
+    margin:auto;
+    padding:40px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.header h1{
+    font-size:52px;
+    font-weight:800;
+    margin-bottom:12px;
+}
+
+.header p{
+    font-size:20px;
+    opacity:0.8;
+}
+
+.quiz-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:28px;
+    padding:28px;
+    transition:0.3s;
+    backdrop-filter:blur(10px);
+    min-height:430px;
+    display:flex;
+    flex-direction:column;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    background:rgba(255,255,255,0.12);
+}
+
+.number{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    background:#7C5CFF;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:22px;
+}
+
+.description{
+    font-size:22px;
+    font-weight:600;
+    line-height:1.6;
+    margin-bottom:24px;
+    flex:1;
+}
+
+.question{
+    font-size:18px;
+    color:#D5D1FF;
+    margin-bottom:18px;
+    font-weight:600;
+}
+
+.options{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.option{
+    border:none;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    padding:12px 16px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:0.25s;
+    font-size:15px;
+    font-weight:600;
+}
+
+.option:hover{
+    background:#7C5CFF;
+}
+
+.option.selected{
+    background:#A855F7;
+}
+
+.option.correct{
+    background:#22C55E !important;
+}
+
+.option.wrong{
+    background:#EF4444 !important;
+}
+
+.feedback{
+    margin-top:18px;
+    padding:14px;
+    border-radius:16px;
+    font-size:15px;
+    line-height:1.6;
+    display:none;
+}
+
+.feedback.correct{
+    background:rgba(34,197,94,0.18);
+    border:1px solid rgba(34,197,94,0.4);
+}
+
+.feedback.wrong{
+    background:rgba(239,68,68,0.18);
+    border:1px solid rgba(239,68,68,0.4);
+}
+
+.submit-wrap{
+    margin-top:50px;
+    text-align:center;
+}
+
+.submit-btn{
+    border:none;
+    background:white;
+    color:#0F0A3B;
+    padding:18px 42px;
+    border-radius:999px;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.submit-btn:hover{
+    transform:scale(1.05);
+}
+
+.result{
+    margin-top:28px;
+    font-size:30px;
+    font-weight:800;
+    color:#FFE082;
+}
+
+.score{
+    margin-top:12px;
+    font-size:20px;
+    opacity:0.9;
+}
+
+@media(max-width:1100px){
+
+    .quiz-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:768px){
+
+    .container{
+        padding:24px;
+    }
+
+    .header h1{
+        font-size:38px;
+    }
+
+    .header p{
+        font-size:17px;
+    }
+
+    .quiz-grid{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        min-height:auto;
+    }
+
+    .description{
+        font-size:20px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Quiz Ngôn ngữ Hình khối & Cảm xúc</h1>
+
+        <p>
+            Đọc mô tả hình khối và chọn cảm xúc mà em liên tưởng đến.
+        </p>
+    </div>
+
+    <div class="quiz-grid">
+
+        <!-- 1 -->
+        <div class="card" data-answer="😨 Sợ hãi">
+
+            <div class="number">1</div>
+
+            <div class="description">
+                Khối đá thô ráp với những vết nứt sâu và đường nét gai góc.
+            </div>
+
+            <div class="question">
+                Em cảm nhận được cảm xúc nào?
+            </div>
+
+            <div class="options">
+                <button class="option">🔥 Tức giận</button>
+                <button class="option">😨 Sợ hãi</button>
+                <button class="option">⚡ Căng thẳng</button>
+                <button class="option">😊 Vui vẻ</button>
+            </div>
+
+            <div class="feedback"></div>
+
+        </div>
+
+        <!-- 2 -->
+        <div class="card" data-answer="🌿 Bình yên">
+
+            <div class="number">2</div>
+
+            <div class="description">
+                Hình tượng mềm mại, uốn lượn không góc cạnh, với các đường cong mượt mà.
+            </div>
+
+            <div class="question">
+                Em cảm nhận được cảm xúc nào?
+            </div>
+
+            <div class="options">
+                <button class="option">🌿 Bình yên</button>
+                <button class="option">🔥 Tức giận</button>
+                <button class="option">😨 Sợ hãi</button>
+                <button class="option">⚡ Căng thẳng</button>
+            </div>
+
+            <div class="feedback"></div>
+
+        </div>
+
+        <!-- 3 -->
+        <div class="card" data-answer="🕳️ Cô đơn">
+
+            <div class="number">3</div>
+
+            <div class="description">
+                Tác phẩm nhiều khoảng trống. Các lỗ hổng xuyên thấu, cho ánh sáng đi qua.
+            </div>
+
+            <div class="question">
+                Em cảm nhận được cảm xúc nào?
+            </div>
+
+            <div class="options">
+                <button class="option">🕳️ Cô đơn</button>
+                <button class="option">😊 Vui vẻ</button>
+                <button class="option">🔥 Tức giận</button>
+                <button class="option">🪨 Mạnh mẽ</button>
+            </div>
+
+            <div class="feedback"></div>
+
+        </div>
+
+        <!-- 4 -->
+        <div class="card" data-answer="🪨 Mạnh mẽ">
+
+            <div class="number">4</div>
+
+            <div class="description">
+                Khối vuông vức, cứng cáp. Bề mặt nhẵn bóng, đường nét dứt khoát.
+            </div>
+
+            <div class="question">
+                Em cảm nhận được cảm xúc nào?
+            </div>
+
+            <div class="options">
+                <button class="option">🪨 Mạnh mẽ</button>
+                <button class="option">🕳️ Cô đơn</button>
+                <button class="option">🌧️ Buồn bã</button>
+                <button class="option">🌿 Bình yên</button>
+            </div>
+
+            <div class="feedback"></div>
+
+        </div>
+
+        <!-- 5 -->
+        <div class="card" data-answer="😰 Lo lắng">
+
+            <div class="number">5</div>
+
+            <div class="description">
+                Hình khối nghiêng lệch, chồng chéo. Các mảng đan xen mất cân bằng như sắp đổ vỡ.
+            </div>
+
+            <div class="question">
+                Em cảm nhận được cảm xúc nào?
+            </div>
+
+            <div class="options">
+                <button class="option">😰 Lo lắng</button>
+                <button class="option">😊 Vui vẻ</button>
+                <button class="option">🌿 Bình yên</button>
+                <button class="option">✨ Hy vọng</button>
+            </div>
+
+            <div class="feedback"></div>
+
+        </div>
+
+        <!-- 6 -->
+        <div class="card" data-answer="✨ Hy vọng">
+
+            <div class="number">6</div>
+
+            <div class="description">
+                Cấu trúc vươn cao. Các đường nét hướng lên tạo cảm giác nhẹ và thoáng.
+            </div>
+
+            <div class="question">
+                Em cảm nhận được cảm xúc nào?
+            </div>
+
+            <div class="options">
+                <button class="option">✨ Hy vọng</button>
+                <button class="option">😨 Sợ hãi</button>
+                <button class="option">🌧️ Buồn bã</button>
+                <button class="option">🕳️ Cô đơn</button>
+            </div>
+
+            <div class="feedback"></div>
+
+        </div>
+
+    </div>
+
+    <div class="submit-wrap">
+
+        <button class="submit-btn" onclick="checkAnswers()">
+            Kiểm tra kết quả
+        </button>
+
+        <div class="result" id="result"></div>
+
+        <div class="score" id="score"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+const options = document.querySelectorAll('.option');
+
+options.forEach(option => {
+
+    option.addEventListener('click', () => {
+
+        if(option.classList.contains('correct') || option.classList.contains('wrong')){
+            return;
+        }
+
+        const parent = option.parentElement;
+
+        parent.querySelectorAll('.option').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+
+        option.classList.add('selected');
+
+    });
+
+});
+
+function checkAnswers(){
+
+    const cards = document.querySelectorAll('.card');
+
+    let score = 0;
+    let answered = 0;
+
+    cards.forEach(card => {
+
+        const answer = card.dataset.answer;
+        const selected = card.querySelector('.option.selected');
+        const feedback = card.querySelector('.feedback');
+
+        if(!selected){
+            return;
+        }
+
+        answered++;
+
+        const selectedText = selected.innerText.trim();
+
+        const allOptions = card.querySelectorAll('.option');
+
+        allOptions.forEach(btn => {
+
+            if(btn.innerText.trim() === answer){
+                btn.classList.add('correct');
+            }
+
+        });
+
+        if(selectedText === answer){
+
+            score++;
+
+            feedback.style.display = "block";
+            feedback.classList.add('correct');
+
+            feedback.innerHTML = `
+                ✅ Chính xác!<br>
+                Hình khối này thường tạo cảm giác <strong>${answer}</strong>.
+            `;
+
+        }else{
+
+            selected.classList.add('wrong');
+
+            feedback.style.display = "block";
+            feedback.classList.add('wrong');
+
+            feedback.innerHTML = `
+                ❌ Chưa chính xác.<br>
+                Đáp án phù hợp hơn là <strong>${answer}</strong>.
+            `;
+
+        }
+
+    });
+
+    const result = document.getElementById('result');
+    const scoreText = document.getElementById('score');
+
+    if(answered < 6){
+
+        result.innerHTML = "Hãy trả lời đầy đủ tất cả câu hỏi ✨";
+        scoreText.innerHTML = "";
+
+        return;
+    }
+
+    result.innerHTML = "🎉 Hoàn thành Quiz!";
+    scoreText.innerHTML = `Điểm của em: <strong>${score}/6</strong>`;
+
+}
+
+</script>
+
+</body>
+</html>
