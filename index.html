@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thời khóa biểu Nghệ thuật học cơ bản GPD1135</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f5f5;
+            padding: 10px;
+        }
+        
+        .timetable-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: #8B0000;
+            color: white;
+            padding: 12px 15px;
+            text-align: center;
+        }
+        
+        .header-title {
+            font-size: 21px;
+            font-weight: 600;
+        }
+        
+        .week-nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: #f8f8f8;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .nav-btn {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 8px 14px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .nav-btn:hover {
+            background: #f0f0f0;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .week-display {
+            flex: 1;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .table-wrapper {
+            padding: 0;
+        }
+        
+        .timetable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .timetable th {
+            background: white;
+            color: #8B0000;
+            padding: 12px 10px;
+            font-weight: 600;
+            font-size: 18px;
+            border: 2px solid #8B0000;
+            text-align: center;
+        }
+        
+        .timetable td {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            vertical-align: top;
+            min-height: 75px;
+            background: white;
+            font-size: 13px;
+        }
+        
+        .time-col {
+            background: white;
+            color: #8B0000;
+            font-weight: 600;
+            text-align: center;
+            width: 100px;
+            border: 1px solid #8B0000;
+            font-size: 15px;
+        }
+        
+        .empty-cell {
+            background: #fafafa;
+        }
+        
+        .class-block {
+            background: #E6F0FF;
+            border: 1px solid #4A90E2;
+            border-radius: 3px;
+            padding: 8px;
+            height: 100%;
+        }
+        
+        .class-title {
+            font-weight: 600;
+            color: #4A90E2;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        
+        .class-content {
+            color: #333;
+            line-height: 1.4;
+            font-size: 12px;
+        }
+        
+        .class-info {
+            background: #f8f8f8;
+            padding: 12px 15px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .week-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="timetable-container">
+        <div class="header">
+            <div class="header-title">Thời khóa biểu Nghệ thuật học cơ bản (GPD1135) - Lớp B01</div>
+        </div>
+        
+        <div class="week-nav">
+            <button class="nav-btn" id="prevBtn" onclick="changeWeek(-1)">← Tuần trước</button>
+            <div class="week-display" id="weekDisplay"></div>
+            <button class="nav-btn" id="nextBtn" onclick="changeWeek(1)">Tuần sau →</button>
+        </div>
+        
+        <div class="table-wrapper">
+            <table class="timetable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th id="wedHeader">Thứ 4</th>
+                        <th id="satHeader">Thứ 7</th>
+                    </tr>
+                </thead>
+                <tbody id="timetableBody">
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="class-info">
+            <div>
+                <span style="font-weight: 600;">Lớp:</span> B01 | <span style="font-weight: 600;">Phòng:</span> B.09-07 | <span style="font-weight: 600;">Tiết 7-8-9 (13h00 → 15h10)</span> | <span style="font-weight: 600;">Thứ 4 & Thứ 7</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const weeks = [
+            {
+                name: "Tuần 1 (11/5 - 16/5)",
+                thursday: { date: "13/05", classes: [{ period: "Tiết 7-9", title: "Tổng quan", content: "Nghệ thuật & tầm quan trong cuộc sống; Tiến trình phát triển nghệ thuật qua các giai đoạn lịch sử" }] },
+                saturday: { date: "16/05", classes: [{ period: "Tiết 7-9", title: "Tổng quan (tiếp theo)", content: "Lợi ích khi thương thức & cảm thụ nghệ thuật; Phương pháp tiếp cận và phân tích tác phẩm nghệ thuật" }] }
+            },
+            {
+                name: "Tuần 2 (18/5 - 23/5)",
+                thursday: { date: "20/05", classes: [{ period: "Tiết 7-9", title: "Kiến Trúc", content: "Lịch sử, khái niệm & ý nghĩa; Ngôn ngữ đặc trưng, công năng & ứng dụng; Không gian, khối áo & tỉ lệ; Các phong cách kiến trúc" }] },
+                saturday: { date: "23/05", classes: [{ period: "Tiết 7-9", title: "Điêu Khắc", content: "Lịch sử nghệ thuật điêu khắc; Ngôn ngữ đặc trưng của hình khối & cấu trúc; Điêu khắc trạng trí & tương đối" }] }
+            },
+            {
+                name: "Tuần 3 (25/5 - 30/5)",
+                thursday: { date: "27/05", classes: [{ period: "Tiết 7-9", title: "Hội Họa", content: "Màu sắc, chủ đề tác phẩm; Hình tượng hóa trong hội họa; Ảnh hưởng đến thiết kế đồ họa & quảng cáo" }] },
+                saturday: { date: "30/05", classes: [{ period: "Tiết 7-9", title: "Hội Họa (tiếp theo)", content: "Ấn tượng màu sắc trong cấm quan; Phân loại các thể loại hội họa & ứng dụng thực tiễn" }] }
+            },
+            {
+                name: "Tuần 4 (01/6 - 06/6)",
+                thursday: { date: "03/06", classes: [{ period: "Tiết 7-9", title: "Âm Nhạc", content: "Nhạc cổ điển & nhạc dân gian; Cách thương thức âm nhạc; Tác dụng với tâm lý con người" }] },
+                saturday: { date: "06/06", classes: [{ period: "Tiết 7-9", title: "Thuyết trình nhóm đợt 1", content: "Thuyết trình & chia sẻ kiến thức về các loại hình nghệ thuật" }] }
+            },
+            {
+                name: "Tuần 5 (08/6 - 13/6)",
+                thursday: { date: "10/06", classes: [{ period: "Tiết 7-9", title: "Văn Học", content: "Lịch sử ngôn ngữ & phát triển văn học; Trường phái văn chương nổi tiếng; Chức năng của văn học" }] },
+                saturday: { date: "13/06", classes: [{ period: "Tiết 7-9", title: "Sân Khấu", content: "Khái niệm, biểu hiện & ý nghĩa; Chức năng của nghệ thuật sân khấu; Giáo dục & nuôi dưỡng trí tưởng tượng" }] }
+            },
+            {
+                name: "Tuần 6 (15/6 - 20/6)",
+                thursday: { date: "17/06", classes: [{ period: "Tiết 7-9", title: "Điện Ảnh", content: "Khái niệm, biểu hiện & ý nghĩa; Ngôn ngữ điện ảnh, tạo hình; Phân tích các tác phẩm điện ảnh nổi bật" }] },
+                saturday: { date: "20/06", classes: [{ period: "Tiết 7-9", title: "Thuyết trình nhóm đợt 2", content: "Thuyết trình & chia sẻ kiến thức tiếp theo về các loại hình nghệ thuật" }] }
+            },
+            {
+                name: "Tuần 7 (22/6 - 27/6)",
+                thursday: { date: "24/06", classes: [{ period: "Tiết 7-9", title: "Ôn tập", content: "Ôn tập & Hướng dẫn viết tiểu luận cuối kỳ" }] },
+                saturday: { date: "27/06", classes: [{ period: "Tiết 7-9", title: "Ôn tập", content: "Ôn tập toàn bộ & Giải đáp thắc mắc" }] }
+            },
+            {
+                name: "Tuần 8 (29/6 - 01/7)",
+                thursday: { date: "01/07", classes: [{ period: "Tiết 7-9", title: "Ôn tập", content: "Ôn tập cuối cùng & Giải đáp thắc mắc cuối kỳ" }] },
+                saturday: null
+            }
+        ];
+
+        let currentWeek = 0;
+
+        function renderTimetable() {
+            const week = weeks[currentWeek];
+            document.getElementById('weekDisplay').textContent = week.name;
+            
+            document.getElementById('wedHeader').textContent = `Thứ 4 (${week.thursday.date})`;
+            if (week.saturday) {
+                document.getElementById('satHeader').textContent = `Thứ 7 (${week.saturday.date})`;
+            }
+            
+            const tbody = document.getElementById('timetableBody');
+            tbody.innerHTML = '';
+            
+            const periods = ['Tiết 1-3', 'Tiết 4-6', 'Tiết 7-9'];
+            
+            periods.forEach(period => {
+                const row = document.createElement('tr');
+                
+                const timeCell = document.createElement('td');
+                timeCell.className = 'time-col';
+                timeCell.textContent = period;
+                row.appendChild(timeCell);
+                
+                const thuCell = document.createElement('td');
+                const thuClass = week.thursday.classes.find(c => c.period === period);
+                if (thuClass) {
+                    thuCell.innerHTML = `<div class="class-block"><div class="class-title">${thuClass.title}</div><div class="class-content">${thuClass.content}</div></div>`;
+                } else {
+                    thuCell.className = 'empty-cell';
+                }
+                row.appendChild(thuCell);
+                
+                const satCell = document.createElement('td');
+                if (week.saturday) {
+                    const satClass = week.saturday.classes.find(c => c.period === period);
+                    if (satClass) {
+                        satCell.innerHTML = `<div class="class-block"><div class="class-title">${satClass.title}</div><div class="class-content">${satClass.content}</div></div>`;
+                    } else {
+                        satCell.className = 'empty-cell';
+                    }
+                } else {
+                    satCell.className = 'empty-cell';
+                }
+                row.appendChild(satCell);
+                
+                tbody.appendChild(row);
+            });
+            
+            document.getElementById('prevBtn').disabled = currentWeek === 0;
+            document.getElementById('nextBtn').disabled = currentWeek === weeks.length - 1;
+        }
+
+        function changeWeek(delta) {
+            const newWeek = currentWeek + delta;
+            if (newWeek >= 0 && newWeek < weeks.length) {
+                currentWeek = newWeek;
+                renderTimetable();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        renderTimetable();
+    </script>
+</body>
+</html>
