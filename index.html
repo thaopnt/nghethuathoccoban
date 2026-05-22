@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Đọc hiểu ngôn ngữ kiến trúc</title>
+
+<style>
+
+body{
+    font-family:"Times New Roman", Times, serif;
+    background:#f4f1eb;
+    margin:0;
+    padding:40px;
+    color:#222;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:10px;
+    font-size:44px;
+    font-weight:bold;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:40px;
+    font-size:20px;
+    font-style:italic;
+}
+
+.quiz{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+}
+
+.column{
+    background:white;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.08);
+}
+
+.column h2{
+    margin-top:0;
+    text-align:center;
+    margin-bottom:25px;
+    font-size:30px;
+}
+
+.item{
+    border:2px solid #ddd;
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:16px;
+    background:#faf8f4;
+    cursor:pointer;
+    transition:0.2s;
+    line-height:1.6;
+    font-size:20px;
+}
+
+.item:hover{
+    transform:translateY(-2px);
+    border-color:#c79a74;
+    background:#fffdf9;
+}
+
+.item.selected{
+    border-color:#b95e28;
+    background:#fff1e8;
+}
+
+.item.correct{
+    border-color:#43b66c;
+    background:#ecfff2;
+}
+
+.item.wrong{
+    border-color:#d9534f;
+    background:#fff1f0;
+}
+
+.left .label{
+    display:inline-flex;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:#222;
+    color:white;
+    align-items:center;
+    justify-content:center;
+    margin-right:12px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.right .label{
+    font-weight:bold;
+    margin-right:10px;
+    font-size:20px;
+}
+
+.controls{
+    text-align:center;
+    margin-top:35px;
+}
+
+button{
+    border:none;
+    padding:14px 28px;
+    margin:0 10px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:18px;
+    font-family:"Times New Roman", Times, serif;
+    transition:0.2s;
+}
+
+.check-btn{
+    background:#222;
+    color:white;
+}
+
+.check-btn:hover{
+    background:#444;
+}
+
+.reset-btn{
+    background:#ddd;
+}
+
+.reset-btn:hover{
+    background:#cfcfcf;
+}
+
+.score{
+    margin-top:25px;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+@media(max-width:900px){
+
+    .quiz{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:34px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Đọc hiểu ngôn ngữ kiến trúc</h1>
+
+    <div class="subtitle">
+        Interactive Matching Quiz
+    </div>
+
+    <div class="quiz">
+
+        <!-- LEFT COLUMN -->
+        <div class="column">
+
+            <h2>Yếu tố</h2>
+
+            <div class="item left" data-match="C">
+                <span class="label">1</span>
+                Hình khối
+            </div>
+
+            <div class="item left" data-match="A">
+                <span class="label">2</span>
+                Không gian
+            </div>
+
+            <div class="item left" data-match="B">
+                <span class="label">3</span>
+                Tỷ lệ
+            </div>
+
+            <div class="item left" data-match="D">
+                <span class="label">4</span>
+                Ánh sáng
+            </div>
+
+            <div class="item left" data-match="E">
+                <span class="label">5</span>
+                Vật liệu
+            </div>
+
+            <div class="item left" data-match="F">
+                <span class="label">6</span>
+                Màu sắc
+            </div>
+
+            <div class="item left" data-match="G">
+                <span class="label">7</span>
+                Ngữ cảnh
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="column">
+
+            <h2>Giải thích</h2>
+
+            <div class="item right" data-id="A">
+                <span class="label">A.</span>
+                Cách tổ chức khoảng trống bên trong và bên ngoài công trình, ảnh hưởng trực tiếp đến trải nghiệm của con người.
+            </div>
+
+            <div class="item right" data-id="B">
+                <span class="label">B.</span>
+                Quan hệ kích thước giữa các bộ phận trong công trình và với cơ thể người, giúp tạo cảm giác cân đối và hài hòa.
+            </div>
+
+            <div class="item right" data-id="C">
+                <span class="label">C.</span>
+                Dáng vẻ và cấu trúc bên ngoài của công trình, là yếu tố đầu tiên tạo ấn tượng thị giác.
+            </div>
+
+            <div class="item right" data-id="D">
+                <span class="label">D.</span>
+                Sự kết hợp giữa ánh sáng tự nhiên và nhân tạo để làm nổi bật hình khối, chiều sâu và cảm xúc không gian.
+            </div>
+
+            <div class="item right" data-id="E">
+                <span class="label">E.</span>
+                Mỗi loại vật liệu mang lại cảm giác và đặc tính thẩm mỹ khác nhau như ấm áp, chắc chắn hay hiện đại.
+            </div>
+
+            <div class="item right" data-id="F">
+                <span class="label">F.</span>
+                Yếu tố tạo tác động tâm lý, định hướng cảm xúc và hỗ trợ phân chia không gian trong kiến trúc.
+            </div>
+
+            <div class="item right" data-id="G">
+                <span class="label">G.</span>
+                Mối quan hệ giữa công trình với môi trường xung quanh như địa hình, khí hậu và văn hóa địa phương.
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="controls">
+
+        <button class="check-btn" onclick="checkAnswers()">
+            Kiểm tra
+        </button>
+
+        <button class="reset-btn" onclick="resetQuiz()">
+            Làm lại
+        </button>
+
+    </div>
+
+    <div class="score" id="score"></div>
+
+</div>
+
+<script>
+
+let selectedLeft = null;
+let pairs = [];
+
+const leftItems = document.querySelectorAll('.left');
+const rightItems = document.querySelectorAll('.right');
+
+leftItems.forEach(item => {
+
+    item.addEventListener('click', () => {
+
+        leftItems.forEach(i => i.classList.remove('selected'));
+
+        item.classList.add('selected');
+
+        selectedLeft = item;
+
+    });
+
+});
+
+rightItems.forEach(item => {
+
+    item.addEventListener('click', () => {
+
+        if(!selectedLeft) return;
+
+        pairs.push({
+            left:selectedLeft,
+            right:item
+        });
+
+        selectedLeft.style.opacity = "0.6";
+        item.style.opacity = "0.6";
+
+        selectedLeft.classList.remove('selected');
+
+        selectedLeft = null;
+
+    });
+
+});
+
+function checkAnswers(){
+
+    let correct = 0;
+
+    pairs.forEach(pair => {
+
+        const leftAnswer = pair.left.dataset.match;
+        const rightAnswer = pair.right.dataset.id;
+
+        if(leftAnswer === rightAnswer){
+
+            pair.left.classList.add('correct');
+            pair.right.classList.add('correct');
+
+            correct++;
+
+        }else{
+
+            pair.left.classList.add('wrong');
+            pair.right.classList.add('wrong');
+
+        }
+
+    });
+
+    document.getElementById('score').innerHTML =
+        `Bạn trả lời đúng ${correct}/7 câu`;
+
+}
+
+function resetQuiz(){
+
+    pairs = [];
+    selectedLeft = null;
+
+    document.querySelectorAll('.item').forEach(item => {
+
+        item.classList.remove(
+            'selected',
+            'correct',
+            'wrong'
+        );
+
+        item.style.opacity = "1";
+
+    });
+
+    document.getElementById('score').innerHTML = "";
+
+}
+
+</script>
+
+</body>
+</html>
